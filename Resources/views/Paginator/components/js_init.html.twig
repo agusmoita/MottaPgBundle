@@ -1,0 +1,81 @@
+<script type="text/javascript">
+	var form = "{{ paginator.id }}"
+    var pageForm = "{{ paginator.form.page.vars.id }}"
+    var pageVal = "{{ paginator.form.vars.value.page }}"
+    var totalPages = "{{ paginator.totalPages }}"
+    var totalRows = "{{ paginator.totalRows }}"
+    var cantForm = "{{ paginator.form.rowsPerPage.vars.id }}"
+    var orderByForm = "{{ paginator.form.orderBy.vars.id }}"
+    var orderByVal = "{{ paginator.form.vars.value.orderBy }}"
+    var directionForm = "{{ paginator.form.direction.vars.id }}"
+    var directionVal = "{{ paginator.form.vars.value.direction }}"
+    var massIdsForm = "{{ paginator.form.massIds.vars.id }}"
+    var massIdsVal = "{{ paginator.form.vars.value.massIds }}"
+    var massAllForm = "{{ paginator.form.massAll.vars.id }}"
+    var massAllVal = "{{ paginator.form.vars.value.massAll }}"
+    var showPageNav = "{{ paginator.hide.pageNav }}"
+    var cleanForm = "{{ paginator.form.clean.vars.id }}"
+    var cleanVal = false
+    var hide = "{{ paginator.hide.listado }}"
+
+    $("#"+form+" #"+cleanForm).val(false)
+
+    function validatePageButtons() {
+        if (totalPages <= 1 && !showPageNav) {
+            $('#'+form+" .page-nav").addClass('hide')
+        } else {
+            $('#'+form+" .page-nav").removeClass('hide')
+        }
+        $('#prevPage-'+form).attr('disabled',
+              (+$("#"+form+" #"+pageForm).val() <= 1))
+        $('#nextPage-'+form).attr('disabled',
+            ( parseInt(totalPages) <= parseInt(pageVal) ))
+        $('#lastPage-'+form).attr('disabled',
+            ( parseInt(totalPages) <= parseInt(pageVal) ))
+        $('#firstPage-'+form).attr('disabled',
+            (+$("#"+form+" #"+pageForm).val() <= 1))
+    }
+
+    function cleanMassIds() {
+        $("#"+form+" #"+massIdsForm).val('')
+        massIdsVal = null
+        $("#"+form+" #"+massAllForm).val(false)
+        massAllVal = false
+    }
+
+    function checkSelecteds() {
+        if ($('#'+form+' #'+massIdsForm).val()) {
+            var arr = $('#'+form+' #'+massIdsForm).val().split('#')
+            for (var i = 0; i < arr.length; i++) {
+                $('#'+form+' #massaction'+arr[i]).attr('checked', 'checked')
+            }
+            var count = arr.length
+            if (arr.length > 0 && arr[0] == "") {
+                count--
+            }
+            $('#'+form+' #selecteds-count').text(count)
+        }
+        else {
+            $('#'+form+' #selecteds-count').text(0)
+        }
+
+        var all = $('#'+form+' .massaction').length
+        var selecteds = $('#'+form+' .massaction:checked').length
+        var value = all === selecteds
+        var ma = $('#'+form+' #massaction-all')[0]
+        if (ma !== undefined) {
+            ma.checked = value
+        }
+        $('#'+form+' #'+massAllForm).val(value)
+    }
+
+    function loaderButton(active) {
+        if (active === undefined) {
+            active = true
+        }
+        var content = active
+                        ? '<i class="fa fa-spinner fa-spin" style="margin: auto 14.7px;"></i>'
+                        : 'Search'
+        $('#search-'+form).html(content)
+    }
+</script>

@@ -1,0 +1,14 @@
+{% extends 'MottaPgBundle:Paginator:layouts/paginator_base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {% include 'MottaPgBundle:Paginator:components/js_init.html.twig' %}
+    <script type="text/javascript">
+        var pgroute = ""
+        function pgsubmit() {
+        	loaderButton()
+            $('#'+form).submit()
+        }
+    </script>
+    {% include 'MottaPgBundle:Paginator:components/js.html.twig' %}
+{% endblock %}

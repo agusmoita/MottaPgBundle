@@ -1,0 +1,4 @@
+<div class="col-xs-12 col-sm-2 {{ paginator.exports|length == 0 ? 'col-sm-offset-2' : '' }} small {{ paginator.hide.rowsPerPage ? 'hide' : '' }}">
+    {{ form_label(paginator.form.rowsPerPage, null) }}
+    {{ form_widget(paginator.form.rowsPerPage, { 'attr': {'class': 'btn btn-default btn-navbar btn-sm'} }) }}
+</div>

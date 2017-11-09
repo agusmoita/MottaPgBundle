@@ -1,0 +1,12 @@
+{% if paginator.form.massForm is defined %}
+	<div id="massForm-{{ paginator.id }}">
+		<div class="row">
+			{% for field in paginator.form.massForm %}
+				<div class="col-sm-3" style="margin-bottom: 20px;">
+					{{ form_label(field) }}
+					{{ form_widget(field, {"attr": {"class": "form-control"} } ) }}
+				</div>
+			{% endfor %}
+		</div>
+	</div>
+{% endif %}

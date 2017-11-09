@@ -1,0 +1,29 @@
+{{ form_row(paginator.form.massIds) }}
+{{ form_row(paginator.form.massAll) }}
+<div class="col-xs-4">
+    <div class="dropdown">
+        {% if paginator.massActions|length > 0 %}
+        	{% if paginator.massActions|length > 1 %}
+                <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMassActions"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    Actions <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" aria-labelledby="dropdownMassActions">
+                    {% for action in paginator.massActions %}
+                        <li>
+                            <a href="#" id="{{ action.id }}" modal="{{ action.confirmationModal }}" class="action">{{ action.title }}</a>
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% else %}
+            	{% for action in paginator.massActions %}
+                    <a href="#" id="{{ action.id }}" modal="{{ action.confirmationModal }}" class="btn btn-primary action">{{ action.title }}</a>
+                {% endfor %}
+        	{% endif %}
+            <span id="selecteds">
+                <strong>Selecteds:</strong> <span id="selecteds-count"></span>
+            </span>
+        {% endif %}
+        <strong>Total:</strong> <span id="totalRows-{{ paginator.id }}">{{ paginator.totalRows }}</span>
+    </div>
+</div>

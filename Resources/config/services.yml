@@ -1,0 +1,46 @@
+services:
+    motta.avisos:
+        class: MottaPgBundle\Util\Alert\Alert
+        arguments: ["@session"]
+
+    motta.form_remember:
+        class: MottaPgBundle\Util\Paginator\FormRemember
+        arguments: ["@session", "@request_stack"]
+
+    motta.query_helper:
+        abstract: true
+        class: MottaPgBundle\Util\QueryHelper\QueryHelper
+        arguments: ["@doctrine"]
+
+    motta.dql_query_helper:
+        class: MottaPgBundle\Util\QueryHelper\DqlQueryHelper
+        parent: "motta.query_helper"
+
+    motta.sql_query_helper:
+        class: MottaPgBundle\Util\QueryHelper\SqlQueryHelper
+        parent: "motta.query_helper"
+
+    motta.massaction:
+        class: MottaPgBundle\Util\MassAction\MassAction
+        shared: false
+        arguments: ["@http_kernel"]
+
+    motta.export:
+        abstract: true
+        class: MottaPgBundle\Util\Export\Export
+        shared: false
+
+    motta.export.excel:
+        class: MottaPgBundle\Util\Export\ExcelExport
+        parent: "motta.export"
+        shared: false
+
+    motta.export.pdf:
+        class: MottaPgBundle\Util\Export\PdfExport
+        parent: motta.export
+        shared: false
+        arguments: ["@?white_october.tcpdf"]
+
+    motta.pg:
+        class: MottaPgBundle\Util\Paginator\Paginator
+        arguments: ["@service_container", "@motta.form_remember", "@motta.dql_query_helper", "@motta.sql_query_helper"]

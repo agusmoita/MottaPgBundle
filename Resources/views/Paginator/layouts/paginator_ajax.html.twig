@@ -1,0 +1,44 @@
+{% extends 'MottaPgBundle:Paginator:layouts/paginator_base.html.twig' %}
+
+{% block javascripts %}
+    {{ parent() }}
+	{% include 'MottaPgBundle:Paginator:components/js_init.html.twig' %}
+    <script type="text/javascript">
+        var pgroute = ""
+        function pgsubmit () {
+            $('#loader-'+form).removeClass('hide')
+            $('#table-'+form+' table').addClass('loading')
+            $.ajax({
+                url: "",
+                type: 'post',
+                data: $('#'+form).serialize(),
+            })
+            .done(function(data) {
+                if (data['totalRows'] == 0 && cleanVal && hide) {
+                    $('#table-container-'+form).addClass('hide')
+                } else {
+                    $('#table-container-'+form).removeClass('hide')
+                }
+                $('#table-body-'+form).html(data['html'])
+                $('#actualPage-'+form).text($("#"+form+" #"+pageForm).val())
+                $('#totalRows-'+form).text(data['totalRows'])
+                $('#totalPages-'+form).text(data['totalPages'])
+
+                $("#"+form+" #"+cleanForm).val(false)
+                cleanVal = false
+                totalPages = data['totalPages']
+                pageVal = $("#"+form+" #"+pageForm).val()
+                validatePageButtons()
+
+                loaderButton(false)
+                $('#loader-'+form).addClass('hide')
+                $('#table-'+form+' table').removeClass('loading')
+                checkSelecteds()
+            })
+            .fail(function(err) {
+                console.error("error", err);
+            })
+        }
+	</script>
+	{% include 'MottaPgBundle:Paginator:components/js.html.twig' %}
+{% endblock %}

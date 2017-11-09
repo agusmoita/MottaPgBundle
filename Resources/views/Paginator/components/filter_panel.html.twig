@@ -1,0 +1,28 @@
+<div class="panel-group" id="accordion-{{ paginator.id }}" role="tablist" aria-multiselectable="true">
+    <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingOne-{{ paginator.id }}">
+            <a id="panel-filter-{{ paginator.id }}" data-toggle="collapse" data-parent="#accordion-{{ paginator.id }}" href="#collapseOne-{{ paginator.id }}" aria-expanded="true" aria-controls="collapseOne-{{ paginator.id }}">
+                <h4 class="text-left panel-title">
+                    <span class="fa fa-search" aria-hidden="true"></span>
+                    Search filters
+                    <span id="arrow-{{ paginator.id }}" class="arrow fa fa-chevron-{{ paginator.panelState == 'open' ? 'up' : 'down' }}"></span>
+                </h4>
+            </a>
+        </div>
+        <div id="collapseOne-{{ paginator.id }}" class="panel-collapse collapse {{ paginator.panelState == 'open' ? 'in' : '' }}" role="tabpanel" aria-labelledby="headingOne">
+            <div class="panel-body" id="filters-{{ paginator.id }}">
+                {% block filters %}
+                	{% include 'MottaPgBundle:Paginator:components/filter_panel_filters.html.twig' %}
+                {% endblock %}
+                <div class="col-md-12 small">
+                    <button class="btn btn-primary btn-navbar btn-md" id="search-{{ paginator.id }}" style="cursor:pointer" type="button" title="Search">
+                        Search
+                    </button>
+                    <button class="btn btn-default btn-navbar btn-md" id="clean-{{ paginator.id }}" style="cursor:pointer" type="button" title="Clean">
+                        Clean
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

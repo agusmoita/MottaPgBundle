@@ -1,0 +1,11 @@
+<td>
+    <div class="dropdown">
+        <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu{{ entityid }}"
+            data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            Select <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenu{{ entityid }}">
+            {% block actions %}{% endblock %}
+        </ul>
+    </div>
+</td>

@@ -1,0 +1,157 @@
+<script type="text/javascript">
+    $(function () {
+        validatePageButtons()
+
+        $('#prevPage-'+form).click(function () {
+            $("#"+form+" #"+pageForm).val(+$("#"+form+" #"+pageForm).val() - 1)
+            pgsubmit()
+        })
+        $('#nextPage-'+form).click(function () {
+            $("#"+form+" #"+pageForm).val(+$("#"+form+" #"+pageForm).val() + 1)
+            pgsubmit()
+        })
+        $('#firstPage-'+form).click(function () {
+            $("#"+form+" #"+pageForm).val(1)
+            pgsubmit()
+        })
+        $('#lastPage-'+form).click(function () {
+            $("#"+form+" #"+pageForm).val(totalPages)
+            pgsubmit()
+        })
+        $("#"+form+" #"+cantForm).change(function () {
+            $("#"+form+" #"+pageForm).val(1)
+            pgsubmit()
+        })
+        $('#sort-'+form).click(function () {
+            $("#"+form+" #"+pageForm).val(1)
+            pgsubmit()
+        })
+
+        function search() {
+            loaderButton()
+            $("#"+form+" #"+pageForm).val(1)
+            cleanMassIds()
+            pgsubmit()
+        }
+        $('#search-'+form).click(function () {
+            search()
+        })
+        $('#clean-'+form).click(function () {
+            $('#filters-'+form+' :input').val('')
+            $("#"+form+" #"+cleanForm).val(true)
+            cleanVal = true
+            search()
+        })
+        $('#filters-'+form+' :input').keypress(function (e) {
+            if (e.keyCode == 13) {
+            	cleanMassIds()
+                search()
+            }
+        })
+
+        $('th.sortable').each(function () {
+            var by = $(this).attr('sort')
+            if (by == orderByVal) {
+                $(this).attr('order', directionVal)
+                $(this).append('<i class="fa fa-sort-'+directionVal+'"></i>')
+            }
+        })
+        $('th.sortable').click(function () {
+            var by = $(this).attr('sort')
+            var order = $(this).attr('order')
+            $("#"+orderByForm).val(by)
+            $("#"+pageForm).val(1)
+            if (order) {
+                $(this).find('i.fa').toggleClass('fa-sort-asc fa-sort-desc')
+                order = order == 'asc' ? 'desc' : 'asc'
+            	$(this).attr('order', order)
+                $("#"+directionForm).val(order)
+            }
+            else {
+            	$('th.sortable').removeAttr('order')
+                $('th.sortable i.fa').remove()
+                $(this).attr('orden', directionVal)
+                $("#"+directionForm).val(directionVal)
+                $(this).append('<i class="fa fa-sort-'+directionVal+'"></i>')
+            }
+            pgsubmit()
+        });
+
+        checkSelecteds()
+
+        $("#panel-filter-{{ paginator.id }}").click(function () {
+            $("#arrow-{{ paginator.id }}").toggleClass('fa-chevron-down fa-chevron-up')
+        })
+
+        $('[data-toggle="tooltip"]').tooltip()
+
+        $(document).on('click', '.massaction',function (e) {
+            var value = $(this).val()
+            if ($(this).is(':checked')) {
+                $('#'+form+' #'+massIdsForm).val($('#'+form+' #'+massIdsForm).val()+'#'+value)
+                var count = parseInt($('#selecteds-count').text()) + 1
+            }
+            else {
+                var arr = []
+                if ($('#'+form+' #'+massAllForm).val() == 'true') {
+                    $('#'+form+' #'+massAllForm).val(false)
+                    $('#massaction-all')[0].checked = false
+                }
+                arr = $('#'+form+' #'+massIdsForm).val().split('#')
+                var index = arr.indexOf(value)
+                arr.splice(index, 1)
+                var count = arr.length
+                if (arr.length > 0 && arr[0] == "") {
+                    count--
+                }
+                var result = arr.join('#')
+                $('#'+form+' #'+massIdsForm).val(result)
+            }
+            $('#'+form+' #selecteds-count').text(count)
+        })
+
+        $(document).on('click', '#massaction-all', function (e) {
+            var acc = this.checked ? true : false
+            $('#'+form+' #'+massAllForm).val(acc)
+            massAllVal = acc
+            if (acc) {
+                $('#'+form+' .massaction:not(:checked)').trigger("click")
+            } else {
+                $('#'+form+' .massaction:checked').trigger("click")
+            }
+        })
+
+        $(document).on('click', '.dropdown .action', function (e) {
+            e.preventDefault()
+            if ($('#'+form+' #selecteds-count').text() == '0') {
+                $('#'+form+' #mass-count-error').removeClass('hide')
+                setTimeout(function () {
+                    $('#'+form+' #mass-count-error').addClass('hide')
+                }, 2500)
+            } else {
+                var modal = $(this).attr('modal')
+                var action = pgroute +"?mass=" + $(this).attr('id')
+                var x = $('#'+form).attr('action')
+                var i = x.indexOf('?')
+                if (i > -1) {
+                    x = x.substr(0, i)
+                }
+                $('#'+form).attr('action', x+action)
+                if (modal != '') {
+                    $('#'+modal).modal('show')
+                } else {
+                    $('#'+form).submit()
+                }
+            }
+        })
+
+        $(".modal-cancel-{{ paginator.id }}").click(function () {
+            var action = $('#'+form).attr('action')
+            var i = action.indexOf('?')
+            if (i > -1) {
+                action = action.substr(0, i)
+            }
+            $('#'+form).attr('action', action)
+        })
+    });
+</script>

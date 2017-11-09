@@ -1,0 +1,45 @@
+{% extends 'MottaPgBundle:Paginator:layouts/paginator_ajax.html.twig' %}
+
+{% block list %}
+    {% set hasMassAction = paginator.massActions|length > 0 ? true : false %}
+    <div class="table-responsive pg-table" id="table-{{ paginator.id }}">
+        <table class="table table-striped table-hover table-condensed">
+            <thead>
+                <tr>
+                    {% if hasMassAction %}
+                        <th>
+                            <input class="massaction-all" type="checkbox" id="massaction-all" name="massaction-all[]" value="-1">
+                        </th>
+                    {% endif %}
+                    {% block paginator_table_header %}{% endblock %}
+                </tr>
+            </thead>
+            <tbody id="table-body-{{ paginator.id }}">
+                {% block page_row %}
+                    {% for entity in paginator.entities %}
+                        {% set entityid = entity.id is defined ? entity.id : '' %}
+                        {% block paginator_row_prev %}
+                            {% set hasMassAction = paginator.massActions|length > 0 ? true : false %}
+
+                            <tr class="pgrow {% block row_class %}{% endblock %}" id="row-{{ entityid }}">
+                                {% if hasMassAction %}
+                                    <td>
+                                        <input class="massaction" type="checkbox" id="massaction{% block massId %}{{ entityid }}{% endblock %}" name="massaction[]" value="{% block massValue %}{{ entityid }}{% endblock %}">
+                                    </td>
+                                {% endif %}
+                                {% block paginator_table_data %}{% endblock %}
+                            </tr>
+                        {% endblock %}
+                    {% else %}
+                        <tr class="danger">
+                            <td colspan="8">
+                                {% block no_data %}No data.{% endblock %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                {% endblock %}
+            </tbody>
+        </table>
+        <i class="fa fa-spinner fa-spin table-loader hide" id="loader-{{ paginator.id }}"></i>
+    </div>
+{% endblock %}
