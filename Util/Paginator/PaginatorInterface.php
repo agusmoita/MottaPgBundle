@@ -63,7 +63,7 @@ interface PaginatorInterface
        * @param string $tooltip
        * @return PaginadorInterface
        */
-	public function addExcelExport($header, $row, $fileName, $tooltip = 'Download');
+	public function addExcelExport($header, $row, $fileName, $tooltip = null);
 
 	/**
        * @param string $header
@@ -73,7 +73,7 @@ interface PaginatorInterface
        * @param string $tooltip
        * @return PaginadorInterface
        */
-	public function addPdfExport($header, $row, $fileName, $title = null, $tooltip = 'Download');
+	public function addPdfExport($header, $row, $fileName, $title = null, $tooltip = null);
 
 	/**
        * @param string $title

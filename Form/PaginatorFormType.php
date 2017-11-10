@@ -14,21 +14,25 @@ class PaginatorFormType extends AbstractType
     {
         $builder
             ->add('page', HiddenType::class, array(
-                'label' => 'Page:'
+                'label' => 'Page:',
+                'label' => 'pgform.labels.page'
             ))
             ->add('rowsPerPage', ChoiceType::class, array(
-                'label' => 'Show: ',
+                'label' => 'Show:',
+                'label' => 'pgform.labels.rows',
                 'choices' => $options['rowsPerPageOptions']
             ))
             ->add('orderBy', ChoiceType::class, array(
                 'label' => 'Order:',
+                'label' => 'pgform.labels.order',
                 'choices' => $options['orderByChoices']
             ))
             ->add('direction', ChoiceType::class, array(
                 'choices' => array(
-                    'Ascendente'  => 'asc',
-                    'Descendente'  => 'desc',
-                )
+                    'Ascending'  => 'asc',
+                    'Descending'  => 'desc',
+                ),
+                'choice_translation_domain' => true
             ))
             ->add('massIds', HiddenType::class)
             ->add('massAll', HiddenType::class)

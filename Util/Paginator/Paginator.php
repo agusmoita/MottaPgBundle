@@ -302,7 +302,7 @@ class Paginator implements PaginatorInterface
      */
     public function setFilter($filter)
     {
-        $this->options['filtro'] = $filter;
+        $this->options['filter'] = $filter;
 
         return $this;
     }
@@ -372,8 +372,9 @@ class Paginator implements PaginatorInterface
      * @param string $tooltip
      * @return Paginador
      */
-    public function addExcelExport($header, $row, $fileName, $tooltip = 'Download')
+    public function addExcelExport($header, $row, $fileName, $tooltip = null)
     {
+        $tooltip = $tooltip ?: $this->get('translator')->trans('Download');
         $i = count($this->exports) + 1;
         $export = $this->container
                     ->get('motta.export.excel')
@@ -393,8 +394,9 @@ class Paginator implements PaginatorInterface
      * @param string $tooltip
      * @return Paginador
      */
-    public function addPdfExport($header, $row, $fileName, $title = null, $tooltip = 'Download')
+    public function addPdfExport($header, $row, $fileName, $title = null, $tooltip = null)
     {
+        $tooltip = $tooltip ?: $this->get('translator')->trans('Download');
         $i = count($this->exports) + 1;
         $export = $this->container
                     ->get('motta.export.pdf')
