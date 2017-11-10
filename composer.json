@@ -1,0 +1,16 @@
+{
+	"name": "agusmoita/mottapg-bundle",
+	"keywords": ["paginator"],
+	"require": {
+		"whiteoctober/tcpdf-bundle": "*"
+	},
+	"authors": [
+		{
+			"name": "Augusto Moita"
+		}
+	]
+	 "autoload": {
+        "psr-0": { "MottaPgBundle": "" }
+    },
+    "target-dir": "MottaPgBundle"
+}
