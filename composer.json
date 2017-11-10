@@ -8,8 +8,8 @@
 		{
 			"name": "Augusto Moita"
 		}
-	]
-	 "autoload": {
+	],
+	"autoload": {
         "psr-0": { "MottaPgBundle": "" }
     },
     "target-dir": "MottaPgBundle"
