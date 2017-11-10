@@ -9,7 +9,7 @@
                 {% block modal_body %}{% endblock %}
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default modal-cancel-{{ paginador.id }}" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-default modal-cancel-{{ paginador.id }}" data-dismiss="modal">{{ 'Cancel'|trans }}</button>
                 {% set form = '#'~ paginador.id %}
                 <button type="button" class="btn btn-ba" onclick="$('{{ form }}').submit();">{{ modalSubmit }}</button>
             </div>

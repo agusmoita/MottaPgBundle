@@ -31,7 +31,7 @@
                     {% else %}
                         <tr class="danger">
                             <td colspan="8">
-                                {% block no_data %}No data.{% endblock %}
+                                {% block no_data %}{{ 'No data'|trans }}.{% endblock %}
                             </td>
                         </tr>
                     {% endfor %}

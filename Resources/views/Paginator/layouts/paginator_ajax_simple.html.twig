@@ -3,7 +3,6 @@
 {% block javascripts %}
     {{ parent() }}
     <script type="text/javascript">
-    $(function () {
         var form = "{{ paginator.id }}"
         var pageForm = "{{ paginator.form.page.vars.id }}"
         var pageVal = "{{ paginator.form.vars.value.page }}"
@@ -19,254 +18,261 @@
         var massAllForm = "{{ paginator.form.massAll.vars.id }}"
         var massAllVal = "{{ paginator.form.vars.value.massAll }}"
         var showPageNav = "{{ paginator.hide.pageNav }}"
+        var cleanForm = "{{ paginator.form.clean.vars.id }}"
+        var cleanVal = false
+        var hide = "{{ paginator.hide.listado }}"
 
-        function validarBotonesPag() {
+        $("#"+form+" #"+cleanForm).val(false)
+
+        function validatePageButtons() {
             if (totalPages <= 1 && !showPageNav) {
                 $('#'+form+" .page-nav").addClass('hide')
             } else {
                 $('#'+form+" .page-nav").removeClass('hide')
             }
-            $("#prevPage-{{ paginator.id }}").attr('disabled',
-                  (+$("#{{ paginator.id }} #"+pageForm).val() <= 1))
-            $("#nextPage-{{ paginator.id }}").attr('disabled',
+            $('#prevPage-'+form).attr('disabled',
+                  (+$("#"+form+" #"+pageForm).val() <= 1))
+            $('#nextPage-'+form).attr('disabled',
                 ( parseInt(totalPages) <= parseInt(pageVal) ))
-            $("#lastPage-{{ paginator.id }}").attr('disabled',
+            $('#lastPage-'+form).attr('disabled',
                 ( parseInt(totalPages) <= parseInt(pageVal) ))
-            $("#firstPage-{{ paginator.id }}").attr('disabled',
-                (+$("#{{ paginator.id }} #"+pageForm).val() <= 1))
+            $('#firstPage-'+form).attr('disabled',
+                (+$("#"+form+" #"+pageForm).val() <= 1))
         }
 
-        function limpiarMassIds() {
-            $("#{{ paginator.id }} #"+massIdsForm).val('')
+        function cleanMassIds() {
+            $("#"+form+" #"+massIdsForm).val('')
             massIdsVal = null
-            $("#{{ paginator.id }} #"+massAllForm).val(false)
+            $("#"+form+" #"+massAllForm).val(false)
             massAllVal = false
         }
 
-        function checkearSeleccionados() {
-            if ($("#{{ paginator.id }} #"+massAllForm).val() && $("#{{ paginator.id }} #"+massAllForm).val() == 'true') {
-                $("#{{ paginator.id }} #seleccionados-count").text(totalRows)
-                $("#{{ paginator.id }} #massaction-all").attr('checked', true)
-                $("#{{ paginator.id }} .massaction").each(function(index, el) {
-                    this.checked = true
-                });
+        function checkselected() {
+            if ($('#'+form+' #'+massIdsForm).val()) {
+                var arr = $('#'+form+' #'+massIdsForm).val().split('#')
+                for (var i = 0; i < arr.length; i++) {
+                    $('#'+form+' #massaction'+arr[i]).attr('checked', 'checked')
+                }
+                var count = arr.length
+                if (arr.length > 0 && arr[0] == "") {
+                    count--
+                }
+                $('#'+form+' #selected-count').text(count)
             }
             else {
-                if ($("#{{ paginator.id }} #"+massIdsForm).val()) {
-                    var arr = $("#{{ paginator.id }} #"+massIdsForm).val().split('#')
-                    for (var i = 0; i < arr.length; i++) {
-                        $("#{{ paginator.id }} #massaction"+arr[i]).attr('checked', 'checked')
-                    }
-                    var count = arr.length
-                    if (arr.length > 0 && arr[0] == "") {
-                        count--
-                    }
-                    $("#{{ paginator.id }} #seleccionados-count").text(count)
-                }
-                else {
-                    $("#{{ paginator.id }} #seleccionados-count").text(0)
-                }
+                $('#'+form+' #selected-count').text(0)
             }
+
+            var all = $('#'+form+' .massaction').length
+            var selected = $('#'+form+' .massaction:checked').length
+            var value = all === selected
+            var ma = $('#'+form+' #massaction-all')[0]
+            if (ma !== undefined) {
+                ma.checked = value
+            }
+            $('#'+form+' #'+massAllForm).val(value)
         }
 
-        function loaderBoton(active = true) {
-            var contenido = active ?
-                            '<i class="fa fa-spinner fa-spin"></i> Buscando...'
-                            :
-                            'Buscar'
-            $("#buscar-{{ paginator.id }}").html(contenido)
+        function loaderButton(active) {
+            if (active === undefined) {
+                active = true
+            }
+            var content = active
+                            ? '<i class="fa fa-spinner fa-spin" style="margin: auto 14.7px;"></i>'
+                            : "{{ 'Search'|trans }}"
+            $('#search-'+form).html(content)
         }
-        var pgruta = ""
-        function submitear () {
-            $("#loader-{{ paginator.id }}").removeClass('hide')
-            $("#tabla-{{ paginator.id }} table").addClass('cargando')
+
+        var pgroute = ""
+        function pgsubmit () {
+            $('#loader-'+form).removeClass('hide')
+            $('#table-'+form+' table').addClass('loading')
             $.ajax({
-                url: "{{ path(ajax_route, ajax_params) }}",
+                url: "",
                 type: 'post',
-                data: $("#{{ paginator.id }}").serialize(),
+                data: $('#'+form).serialize(),
             })
             .done(function(data) {
-                $("#table-container-{{ paginator.id }}").removeClass('hide')
-                $("#tabla-body-{{ paginator.id }}").html(data['html'])
-                $("#actualPage-{{ paginator.id }}").text($("#{{ paginator.id }} #"+pageForm).val())
-                $("#totalRows-{{ paginator.id }}").text(data['totalRows'])
-                $("#totalPages-{{ paginator.id }}").text(data['totalPages'])
+                if (data['totalRows'] == 0 && cleanVal && hide) {
+                    $('#table-container-'+form).addClass('hide')
+                } else {
+                    $('#table-container-'+form).removeClass('hide')
+                }
+                $('#table-body-'+form).html(data['html'])
+                $('#actualPage-'+form).text($("#"+form+" #"+pageForm).val())
+                $('#totalRows-'+form).text(data['totalRows'])
+                $('#totalPages-'+form).text(data['totalPages'])
 
-                $("#"+form+" #"+limpiarForm).val(false)
-                limpiarVal = false
+                $("#"+form+" #"+cleanForm).val(false)
+                cleanVal = false
                 totalPages = data['totalPages']
-                pageVal = $("#{{ paginator.id }} #"+pageForm).val()
-                validarBotonesPag()
+                pageVal = $("#"+form+" #"+pageForm).val()
+                validatePageButtons()
 
-                loaderBoton(false)
-                $("#loader-{{ paginator.id }}").addClass('hide')
-                $("#tabla-{{ paginator.id }} table").removeClass('cargando')
-                checkearSeleccionados()
+                loaderButton(false)
+                $('#loader-'+form).addClass('hide')
+                $('#table-'+form+' table').removeClass('loading')
+                checkselected()
             })
             .fail(function(err) {
                 console.error("error", err);
             })
         }
 
-        validarBotonesPag()
-        $("#prevPage-{{ paginator.id }}").click(function () {
-            $("#{{ paginator.id }} #"+pageForm).val(+$("#{{ paginator.id }} #"+pageForm).val() - 1)
-            submitear()
-        })
-        $("#nextPage-{{ paginator.id }}").click(function () {
-            $("#{{ paginator.id }} #"+pageForm).val(+$("#{{ paginator.id }} #"+pageForm).val() + 1)
-            submitear()
-        })
-        $("#firstPage-{{ paginator.id }}").click(function () {
-            $("#{{ paginator.id }} #"+pageForm).val(1)
-            submitear()
-        })
-        $("#lastPage-{{ paginator.id }}").click(function () {
-            $("#{{ paginator.id }} #"+pageForm).val(totalPages)
-            submitear()
-        })
-        $("#{{ paginator.id }} #"+cantForm).change(function () {
-            $("#{{ paginator.id }} #"+pageForm).val(1)
-            submitear()
-        })
-        $("#ordenar-{{ paginator.id }}").click(function () {
-            $("#{{ paginator.id }} #"+pageForm).val(1)
-            submitear()
-        })
+        $(function () {
+            validatePageButtons()
 
-        $("#buscar-{{ paginator.id }}").click(function () {
-            loaderBoton()
-            $("#{{ paginator.id }} #"+pageForm).val(1)
-            limpiarMassIds()
-            submitear()
-        })
-        $("#limpiar-{{ paginator.id }}").click(function () {
-            $("#filtros-{{ paginator.id }} :input").val('')
-        })
-        $("#filtros-{{ paginator.id }} :input").keypress(function (e) {
-            if (e.keyCode == 13) {
-                limpiarMassIds()
-                submitear()
+            $('#prevPage-'+form).click(function () {
+                $("#"+form+" #"+pageForm).val(+$("#"+form+" #"+pageForm).val() - 1)
+                pgsubmit()
+            })
+            $('#nextPage-'+form).click(function () {
+                $("#"+form+" #"+pageForm).val(+$("#"+form+" #"+pageForm).val() + 1)
+                pgsubmit()
+            })
+            $('#firstPage-'+form).click(function () {
+                $("#"+form+" #"+pageForm).val(1)
+                pgsubmit()
+            })
+            $('#lastPage-'+form).click(function () {
+                $("#"+form+" #"+pageForm).val(totalPages)
+                pgsubmit()
+            })
+            $("#"+form+" #"+cantForm).change(function () {
+                $("#"+form+" #"+pageForm).val(1)
+                pgsubmit()
+            })
+            $('#sort-'+form).click(function () {
+                $("#"+form+" #"+pageForm).val(1)
+                pgsubmit()
+            })
+
+            function search() {
+                loaderButton()
+                $("#"+form+" #"+pageForm).val(1)
+                cleanMassIds()
+                pgsubmit()
             }
-        })
+            $('#search-'+form).click(function () {
+                search()
+            })
+            $('#clean-'+form).click(function () {
+                $('#filters-'+form+' :input').val('')
+                $("#"+form+" #"+cleanForm).val(true)
+                cleanVal = true
+                search()
+            })
+            $('#filters-'+form+' :input').keypress(function (e) {
+                if (e.keyCode == 13) {
+                    cleanMassIds()
+                    search()
+                }
+            })
 
-        $('th.ordenable').each(function () {
-            var by = $(this).attr('sort')
-            if (by == orderByVal) {
-                $(this).attr('orden', ordenVal)
-                $(this).append('<i class="fa fa-sort-'+ordenVal+'"></i>')
-            }
-        })
-        $('th.ordenable').click(function () {
-            var by = $(this).attr('sort')
-            var orden = $(this).attr('orden')
-            $("#"+orderByForm).val(by)
-            $("#"+pageForm).val(1)
-            if (orden) {
-                $(this).find('i.fa').toggleClass('fa-sort-asc fa-sort-desc')
-                orden = orden == 'asc' ? 'desc' : 'asc'
-                $(this).attr('orden', orden)
-                $("#"+ordenForm).val(orden)
-            }
-            else {
-                $('th.ordenable').removeAttr('orden')
-                $('th.ordenable i.fa').remove()
-                $(this).attr('orden', ordenVal)
-                $("#"+ordenForm).val(ordenVal)
-                $(this).append('<i class="fa fa-sort-'+ordenVal+'"></i>')
-            }
-            submitear()
-        });
-
-        limpiarMassIds()
-        checkearSeleccionados()
-
-        $("#panel-filtro-{{ paginator.id }}").click(function () {
-            $("#flecha-{{ paginator.id }}").toggleClass('fa-chevron-down fa-chevron-up')
-        })
-
-        $('[data-toggle="tooltip"]').tooltip()
-
-        $(document).on('click', '.massaction',function (e) {
-            var valor = $(this).val()
-            if ($(this).is(':checked')) {
-                $("#{{ paginator.id }} #"+massIdsForm).val($("#{{ paginator.id }} #"+massIdsForm).val()+'#'+valor)
-                var count = parseInt($("#{{ paginator.id }} #seleccionados-count").text()) + 1
-            }
-            else {
-                var arr = []
-                if ($("#{{ paginator.id }} #"+massAllForm).val() == 'true') {
-                    $("#{{ paginator.id }} #"+massAllForm).val(false)
-                    $('#massaction-all').attr('checked', false)
-                    $('.massaction:checked').each(function(index, el) {
-                        arr.push(this.value)
-                    });
-                    var count = arr.length
+            $('th.sortable').each(function () {
+                var by = $(this).attr('sort')
+                if (by == orderByVal) {
+                    $(this).attr('order', directionVal)
+                    $(this).append('<i class="fa fa-sort-'+directionVal+'"></i>')
+                }
+            })
+            $('th.sortable').click(function () {
+                var by = $(this).attr('sort')
+                var order = $(this).attr('order')
+                $("#"+orderByForm).val(by)
+                $("#"+pageForm).val(1)
+                if (order) {
+                    $(this).find('i.fa').toggleClass('fa-sort-asc fa-sort-desc')
+                    order = order == 'asc' ? 'desc' : 'asc'
+                    $(this).attr('order', order)
+                    $("#"+directionForm).val(order)
                 }
                 else {
-                    arr = $("#{{ paginator.id }} #"+massIdsForm).val().split('#')
-                    var index = arr.indexOf(valor)
+                    $('th.sortable').removeAttr('order')
+                    $('th.sortable i.fa').remove()
+                    $(this).attr('orden', directionVal)
+                    $("#"+directionForm).val(directionVal)
+                    $(this).append('<i class="fa fa-sort-'+directionVal+'"></i>')
+                }
+                pgsubmit()
+            });
+
+            checkselected()
+
+            $("#panel-filter-{{ paginator.id }}").click(function () {
+                $("#arrow-{{ paginator.id }}").toggleClass('fa-chevron-down fa-chevron-up')
+            })
+
+            $('[data-toggle="tooltip"]').tooltip()
+
+            $(document).on('click', '.massaction',function (e) {
+                var value = $(this).val()
+                if ($(this).is(':checked')) {
+                    $('#'+form+' #'+massIdsForm).val($('#'+form+' #'+massIdsForm).val()+'#'+value)
+                    var count = parseInt($('#selected-count').text()) + 1
+                }
+                else {
+                    var arr = []
+                    if ($('#'+form+' #'+massAllForm).val() == 'true') {
+                        $('#'+form+' #'+massAllForm).val(false)
+                        $('#massaction-all')[0].checked = false
+                    }
+                    arr = $('#'+form+' #'+massIdsForm).val().split('#')
+                    var index = arr.indexOf(value)
                     arr.splice(index, 1)
                     var count = arr.length
                     if (arr.length > 0 && arr[0] == "") {
                         count--
                     }
+                    var result = arr.join('#')
+                    $('#'+form+' #'+massIdsForm).val(result)
                 }
-                var resultado = arr.join('#')
-                $("#{{ paginator.id }} #"+massIdsForm).val(resultado)
-            }
-            $("#{{ paginator.id }} #seleccionados-count").text(count)
-        })
-
-        $(document).on('click', '#massaction-all', function (e) {
-            var acc = this.checked ? true : false
-            $("#{{ paginator.id }} #"+massAllForm).val(acc)
-            massAllVal = acc
-            $("#{{ paginator.id }} .massaction").each(function(index, el) {
-                this.checked = acc
+                $('#'+form+' #selected-count').text(count)
             })
-            if (acc) {
-                var count = totalRows
-            }
-            else {
-                limpiarMassIds()
-                var count = 0
-            }
-            $("#{{ paginator.id }} #seleccionados-count").text(count)
-        })
 
-        $(document).on('click', '.dropdown .action', function (e) {
-            e.preventDefault()
-            if ($("#{{ paginator.id }} #seleccionados-count").text() == '0') {
-                $("#{{ paginator.id }} #mass-count-error").removeClass('hide')
-                setTimeout(function () {
-                    $("#{{ paginator.id }} #mass-count-error").addClass('hide')
-                }, 2500)
-            } else {
-                var modal = $(this).attr('modal')
-                var action = pgruta +"?mass=" + $(this).attr('id')
-                var x = $("#{{ paginator.id }}").attr('action')
-                var i = x.indexOf('?')
-                if (i > -1) {
-                    x = x.substr(0, i)
-                }
-                $("#{{ paginator.id }}").attr('action', x+action)
-                if (modal != '') {
-                    $('#'+modal).modal('show')
+            $(document).on('click', '#massaction-all', function (e) {
+                var acc = this.checked ? true : false
+                $('#'+form+' #'+massAllForm).val(acc)
+                massAllVal = acc
+                if (acc) {
+                    $('#'+form+' .massaction:not(:checked)').trigger("click")
                 } else {
-                    $("#{{ paginator.id }}").submit()
+                    $('#'+form+' .massaction:checked').trigger("click")
                 }
-            }
-        })
+            })
 
-        $(".modal-cancelar-{{ paginator.id }}").click(function () {
-            var action = $("#{{ paginator.id }}").attr('action')
-            var i = action.indexOf('?')
-            if (i > -1) {
-                action = action.substr(0, i)
-            }
-            $("#{{ paginator.id }}").attr('action', action)
-        })
-    })
+            $(document).on('click', '.dropdown .action', function (e) {
+                e.preventDefault()
+                if ($('#'+form+' #selected-count').text() == '0') {
+                    $('#'+form+' #mass-count-error').removeClass('hide')
+                    setTimeout(function () {
+                        $('#'+form+' #mass-count-error').addClass('hide')
+                    }, 2500)
+                } else {
+                    var modal = $(this).attr('modal')
+                    var action = pgroute +"?mass=" + $(this).attr('id')
+                    var x = $('#'+form).attr('action')
+                    var i = x.indexOf('?')
+                    if (i > -1) {
+                        x = x.substr(0, i)
+                    }
+                    $('#'+form).attr('action', x+action)
+                    if (modal != '') {
+                        $('#'+modal).modal('show')
+                    } else {
+                        $('#'+form).submit()
+                    }
+                }
+            })
+
+            $(".modal-cancel-{{ paginator.id }}").click(function () {
+                var action = $('#'+form).attr('action')
+                var i = action.indexOf('?')
+                if (i > -1) {
+                    action = action.substr(0, i)
+                }
+                $('#'+form).attr('action', action)
+            })
+        });
     </script>
 {% endblock %}

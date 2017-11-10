@@ -43,7 +43,7 @@
         massAllVal = false
     }
 
-    function checkSelecteds() {
+    function checkselected() {
         if ($('#'+form+' #'+massIdsForm).val()) {
             var arr = $('#'+form+' #'+massIdsForm).val().split('#')
             for (var i = 0; i < arr.length; i++) {
@@ -53,15 +53,15 @@
             if (arr.length > 0 && arr[0] == "") {
                 count--
             }
-            $('#'+form+' #selecteds-count').text(count)
+            $('#'+form+' #selected-count').text(count)
         }
         else {
-            $('#'+form+' #selecteds-count').text(0)
+            $('#'+form+' #selected-count').text(0)
         }
 
         var all = $('#'+form+' .massaction').length
-        var selecteds = $('#'+form+' .massaction:checked').length
-        var value = all === selecteds
+        var selected = $('#'+form+' .massaction:checked').length
+        var value = all === selected
         var ma = $('#'+form+' #massaction-all')[0]
         if (ma !== undefined) {
             ma.checked = value
@@ -75,7 +75,7 @@
         }
         var content = active
                         ? '<i class="fa fa-spinner fa-spin" style="margin: auto 14.7px;"></i>'
-                        : 'Search'
+                        : "{{ 'Search'|trans }}"
         $('#search-'+form).html(content)
     }
 </script>

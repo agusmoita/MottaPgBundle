@@ -6,7 +6,7 @@
         	{% if paginator.massActions|length > 1 %}
                 <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMassActions"
                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-                    Actions <span class="caret"></span>
+                    {{ 'Actions'|trans }} <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu" aria-labelledby="dropdownMassActions">
                     {% for action in paginator.massActions %}
@@ -20,10 +20,10 @@
                     <a href="#" id="{{ action.id }}" modal="{{ action.confirmationModal }}" class="btn btn-primary action">{{ action.title }}</a>
                 {% endfor %}
         	{% endif %}
-            <span id="selecteds">
-                <strong>Selecteds:</strong> <span id="selecteds-count"></span>
+            <span id="selected">
+                <strong>{{ 'Selected'|trans }}:</strong> <span id="selected-count"></span>
             </span>
         {% endif %}
-        <strong>Total:</strong> <span id="totalRows-{{ paginator.id }}">{{ paginator.totalRows }}</span>
+        <strong>{{ 'Total'|trans }}:</strong> <span id="totalRows-{{ paginator.id }}">{{ paginator.totalRows }}</span>
     </div>
 </div>

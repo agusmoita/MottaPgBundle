@@ -1,18 +1,18 @@
 <div class="col-xs-4 small text-center">
     <div class="page-nav {{ ( paginator.totalPages <= 1 and not paginator.hide.pageNav ) ? 'hide' : '' }}">
-        <button class="btn btn-default btn-navbar btn-sm" id="firstPage-{{ paginator.id }}" type="button" title="First page">
+        <button class="btn btn-default btn-navbar btn-sm" id="firstPage-{{ paginator.id }}" type="button" title="{{ 'First page'|trans }}">
             <<
         </button>
-        <button class="btn btn-default btn-navbar btn-sm"  id="prevPage-{{ paginator.id }}" type="button" title="Previous page">
+        <button class="btn btn-default btn-navbar btn-sm"  id="prevPage-{{ paginator.id }}" type="button" title="{{'Previous page'|trans}}">
             <
         </button>
         <span class="btn btn-default btn-navbar btn-sm">
-            <span id="actualPage-{{ paginator.id }}">{{ paginator.form.vars.value.page }}</span> of <span id="totalPages-{{ paginator.id }}">{{ paginator.totalPages }}</span> {{ form_row(paginator.form.page) }}
+            <span id="actualPage-{{ paginator.id }}">{{ paginator.form.vars.value.page }}</span> {{ 'of'|trans }} <span id="totalPages-{{ paginator.id }}">{{ paginator.totalPages }}</span> {{ form_row(paginator.form.page) }}
         </span>
-        <button class="btn btn-default btn-navbar btn-sm" id="nextPage-{{ paginator.id }}" type="button" title="Next page">
+        <button class="btn btn-default btn-navbar btn-sm" id="nextPage-{{ paginator.id }}" type="button" title="{{ 'Next page'|trans }}">
             >
         </button>
-        <button class="btn btn-default btn-navbar btn-sm" id="lastPage-{{ paginator.id }}" type="button" title="Last page">
+        <button class="btn btn-default btn-navbar btn-sm" id="lastPage-{{ paginator.id }}" type="button" title="{{ 'Last page'|trans }}">
             >>
         </button>
     </div>

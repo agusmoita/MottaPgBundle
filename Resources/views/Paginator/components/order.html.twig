@@ -2,7 +2,7 @@
     {{ form_label(paginator.form.orderBy, null) }}
     {{ form_widget(paginator.form.orderBy, { 'attr': {'class': 'btn btn-default btn-navbar btn-sm'} }) }}
     {{ form_widget(paginator.form.direction, { 'attr': {'class': 'btn btn-default btn-navbar btn-sm'} }) }}
-    <button class="btn btn-default btn-navbar btn-sm" id="sort-{{ paginator.id }}" style="cursor:pointer" type="button" title="Sort">
-        Sort
+    <button class="btn btn-default btn-navbar btn-sm" id="sort-{{ paginator.id }}" style="cursor:pointer" type="button" title="{{ 'Sort'|trans }}">
+        {{ 'Sort'|trans }}
     </button>
 </div>
