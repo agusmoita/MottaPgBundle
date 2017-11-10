@@ -231,7 +231,7 @@ class Paginator implements PaginatorInterface
 
         $this->setRepository($repoName, $em);
 
-        $this->removeFilters($form);
+        $this->deleteFilters($form);
 
         $data = $this->getFormData($form);
 
@@ -636,7 +636,7 @@ class Paginator implements PaginatorInterface
      * @param Form $form
      * @return Paginador
      */
-    private function removeFilters(&$form)
+    private function deleteFilters(&$form)
     {
         if ($this->remove) {
             foreach ($this->remove as $filter) {

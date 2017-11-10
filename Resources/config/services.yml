@@ -1,8 +1,4 @@
 services:
-    motta.avisos:
-        class: MottaPgBundle\Util\Alert\Alert
-        arguments: ["@session"]
-
     motta.form_remember:
         class: MottaPgBundle\Util\Paginator\FormRemember
         arguments: ["@session", "@request_stack"]
