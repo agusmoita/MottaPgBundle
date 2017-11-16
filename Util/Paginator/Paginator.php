@@ -2,6 +2,7 @@
 
 namespace MottaPgBundle\Util\Paginator;
 
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use MottaPgBundle\Form\PaginatorFormType;
 
@@ -374,7 +375,7 @@ class Paginator implements PaginatorInterface
      */
     public function addExcelExport($header, $row, $fileName, $tooltip = null)
     {
-        $tooltip = $tooltip ?: $this->get('translator')->trans('Download');
+        $tooltip = $tooltip ?: $this->container->get('translator')->trans('Download');
         $i = count($this->exports) + 1;
         $export = $this->container
                     ->get('motta.export.excel')
@@ -396,7 +397,7 @@ class Paginator implements PaginatorInterface
      */
     public function addPdfExport($header, $row, $fileName, $title = null, $tooltip = null)
     {
-        $tooltip = $tooltip ?: $this->get('translator')->trans('Download');
+        $tooltip = $tooltip ?: $this->container->get('translator')->trans('Download');
         $i = count($this->exports) + 1;
         $export = $this->container
                     ->get('motta.export.pdf')
@@ -921,7 +922,7 @@ class Paginator implements PaginatorInterface
      */
     private function createPage($form, $entities, $totalRows, $totalPages)
     {
-        $templating = $this->container->get('templating');
+        $templating = $this->container->get('twig');
         $paginator = array_merge(
             array(
                 'paginator' => new Page(
@@ -939,7 +940,7 @@ class Paginator implements PaginatorInterface
                 )
             ), $this->params ? $this->params : array()
         );
-        return $this->view ? $templating->renderResponse($this->view, $paginator) : $paginator;
+        return $this->view ? new Response($templating->render($this->view, $paginator)) : $paginator;
     }
 
 }

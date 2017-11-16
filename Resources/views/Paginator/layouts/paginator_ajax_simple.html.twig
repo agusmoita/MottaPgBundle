@@ -1,4 +1,4 @@
-{% extends 'MottaPgBundle:Paginator:layouts/paginator_simple.html.twig' %}
+{% extends '@MottaPg/Paginator/layouts/paginator_simple.html.twig' %}
 
 {% block javascripts %}
     {{ parent() }}
@@ -20,15 +20,15 @@
         var showPageNav = "{{ paginator.hide.pageNav }}"
         var cleanForm = "{{ paginator.form.clean.vars.id }}"
         var cleanVal = false
-        var hide = "{{ paginator.hide.listado }}"
+        var hide = "{{ paginator.hide.list }}"
 
         $("#"+form+" #"+cleanForm).val(false)
 
         function validatePageButtons() {
             if (totalPages <= 1 && !showPageNav) {
-                $('#'+form+" .page-nav").addClass('hide')
+                $('#'+form+" .page-nav").addClass('invisible')
             } else {
-                $('#'+form+" .page-nav").removeClass('hide')
+                $('#'+form+" .page-nav").removeClass('invisible')
             }
             $('#prevPage-'+form).attr('disabled',
                   (+$("#"+form+" #"+pageForm).val() <= 1))
@@ -85,7 +85,7 @@
 
         var pgroute = ""
         function pgsubmit () {
-            $('#loader-'+form).removeClass('hide')
+            $('#loader-'+form).removeClass('invisible')
             $('#table-'+form+' table').addClass('loading')
             $.ajax({
                 url: "",
@@ -94,9 +94,9 @@
             })
             .done(function(data) {
                 if (data['totalRows'] == 0 && cleanVal && hide) {
-                    $('#table-container-'+form).addClass('hide')
+                    $('#table-container-'+form).addClass('invisible')
                 } else {
-                    $('#table-container-'+form).removeClass('hide')
+                    $('#table-container-'+form).removeClass('invisible')
                 }
                 $('#table-body-'+form).html(data['html'])
                 $('#actualPage-'+form).text($("#"+form+" #"+pageForm).val())
@@ -110,7 +110,7 @@
                 validatePageButtons()
 
                 loaderButton(false)
-                $('#loader-'+form).addClass('hide')
+                $('#loader-'+form).addClass('invisible')
                 $('#table-'+form+' table').removeClass('loading')
                 checkselected()
             })
@@ -244,9 +244,9 @@
             $(document).on('click', '.dropdown .action', function (e) {
                 e.preventDefault()
                 if ($('#'+form+' #selected-count').text() == '0') {
-                    $('#'+form+' #mass-count-error').removeClass('hide')
+                    $('#'+form+' #mass-count-error').removeClass('invisible')
                     setTimeout(function () {
-                        $('#'+form+' #mass-count-error').addClass('hide')
+                        $('#'+form+' #mass-count-error').addClass('invisible')
                     }, 2500)
                 } else {
                     var modal = $(this).attr('modal')

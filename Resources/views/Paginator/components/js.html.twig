@@ -124,9 +124,9 @@
         $(document).on('click', '.dropdown .action', function (e) {
             e.preventDefault()
             if ($('#'+form+' #selected-count').text() == '0') {
-                $('#'+form+' #mass-count-error').removeClass('hide')
+                $('#'+form+' #mass-count-error').removeClass('invisible')
                 setTimeout(function () {
-                    $('#'+form+' #mass-count-error').addClass('hide')
+                    $('#'+form+' #mass-count-error').addClass('invisible')
                 }, 2500)
             } else {
                 var modal = $(this).attr('modal')

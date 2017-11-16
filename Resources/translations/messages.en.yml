@@ -1,0 +1,24 @@
+Actions: Actions
+Ascending: Ascending
+Cancel: Cancel
+Clean: Clean
+Descending: Descending
+Download: Download
+First page: First page
+Last page: Last page
+Next page: Next page
+No data: No data
+of: of
+Previous page: Previous page
+Search filters: Search filters
+Search: Search
+Select: Select
+Selected: Selected
+Sort: Sort
+Total: Total
+You must select at least one item: You must select at least one item
+pgform:
+    labels:
+        page: Page
+        rows: Show
+        order: Order

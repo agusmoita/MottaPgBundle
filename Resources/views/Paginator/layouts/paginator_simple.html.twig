@@ -1,5 +1,5 @@
 {% block stylesheets %}
-    {% include 'MottaPgBundle:Paginator:components/css.html.twig' %}
+    {% include '@MottaPg/Paginator/components/css.html.twig' %}
 {% endblock %}
 
 {% block modals %}{% endblock %}
@@ -7,7 +7,7 @@
 {% form_theme paginator.form 'form_div_layout.html.twig' %}
 
 {% block body %}
-	{% include 'MottaPgBundle:Paginator:components/mass_error.html.twig' %}
+	{% include '@MottaPg/Paginator/components/mass_error.html.twig' %}
 	{% block title %}{% endblock %}
 	<div id="list">
 	    <form action="" method="POST" id="{{ paginator.id }}">
@@ -15,7 +15,7 @@
 		        {% if paginator.form.filters is defined and paginator.form.filters|length > 0 %}
 		            {% set filters = paginator.form.filters %}
 		            {% block filtersPanel %}
-		            	{% include 'MottaPgBundle:Paginator:components/filter_'~ paginator.filterTheme ~'.html.twig' %}
+		            	{% include '@MottaPg/Paginator/components/filter_'~ paginator.filterTheme ~'.html.twig' %}
 		            {% endblock %}
 		        {% endif %}
 		        <div class="row">
@@ -24,13 +24,13 @@
 		            </div>
 		        </div>
 	    	{% endblock %}
-	        <div id="table-container-{{ paginator.id }}" class="{{ paginator.hide.list ? 'hide' : '' }} {% block table_class %}{% endblock %}">
-	        	{% include 'MottaPgBundle:Paginator:components/header.html.twig' %}
+	        <div id="table-container-{{ paginator.id }}" class="{{ paginator.hide.list ? 'invisible' : '' }} {% block table_class %}{% endblock %}">
+	        	{% include '@MottaPg/Paginator/components/header.html.twig' %}
 	            <div class="e10"></div>
 	            {% block list %}{% endblock %}
 	            {% block pg_footer %}{% endblock %}
 	            <hr>
-	            {% include 'MottaPgBundle:Paginator:components/footer.html.twig' %}
+	            {% include '@MottaPg/Paginator/components/footer.html.twig' %}
 	            <hr>
 	        </div>
 	        {{ form_row(paginator.form._token) }}

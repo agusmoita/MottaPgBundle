@@ -20,23 +20,28 @@ services:
         class: MottaPgBundle\Util\MassAction\MassAction
         shared: false
         arguments: ["@http_kernel"]
+        public: true
 
     motta.export:
         abstract: true
         class: MottaPgBundle\Util\Export\Export
         shared: false
+        public: true
 
     motta.export.excel:
         class: MottaPgBundle\Util\Export\ExcelExport
         parent: "motta.export"
         shared: false
+        public: true
 
     motta.export.pdf:
         class: MottaPgBundle\Util\Export\PdfExport
         parent: motta.export
         shared: false
         arguments: ["@?white_october.tcpdf"]
+        public: true
 
     motta.pg:
         class: MottaPgBundle\Util\Paginator\Paginator
+        public: true
         arguments: ["@service_container", "@motta.form_remember", "@motta.dql_query_helper", "@motta.sql_query_helper"]

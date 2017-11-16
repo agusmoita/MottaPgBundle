@@ -1,4 +1,4 @@
-<div class="col-xs-2 {{ paginator.hide.rowsPerPage ? 'col-xs-offset-1' : '' }} small {{ paginator.exports|length > 0 ? '' : 'hide' }}">
+<div class="col-2 {{ paginator.hide.rowsPerPage ? 'col-offset-1' : '' }} small {{ paginator.exports|length > 0 ? '' : 'invisible' }}">
     {% for export in paginator.exports %}
         <a class="btn btn-sm btn-{{ export.type == 'excel' ? 'success' : 'danger' }} export" id="{{ export.id }}" href="?export={{ export.id }}" data-toggle="tooltip" data-placement="bottom" title="{{ export.tooltip }}">
             <i class="fa fa-file-{{ export.type }}-o" style="font-size: 14px;"></i>

@@ -1,6 +1,6 @@
 <div class="row">
     {% for f in filters %}
-        <div class="form-group col-xs-12 col-sm-4">
+        <div class="form-group col-12 col-sm-4">
             {{ form_label(f) }}
             {{ form_widget(f, { 'attr': {'class': 'form-control upper'} }) }}
             <div class="text-danger">

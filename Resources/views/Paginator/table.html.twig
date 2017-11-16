@@ -1,4 +1,4 @@
-{% extends 'MottaPgBundle:Paginator:layouts/paginator.html.twig' %}
+{% extends '@MottaPg/Paginator/layouts/paginator.html.twig' %}
 
 {% block list %}
     {% set hasMassAction = paginator.massActions|length > 0 ? true : false %}

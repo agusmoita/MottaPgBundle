@@ -1,8 +1,8 @@
-{% extends 'MottaPgBundle:Paginator:layouts/paginator_base.html.twig' %}
+{% extends '@MottaPg/Paginator/layouts/paginator_base.html.twig' %}
 
 {% block javascripts %}
     {{ parent() }}
-    {% include 'MottaPgBundle:Paginator:components/js_init.html.twig' %}
+    {% include '@MottaPg/Paginator/components/js_init.html.twig' %}
     <script type="text/javascript">
         var pgroute = ""
         function pgsubmit() {
@@ -10,5 +10,5 @@
             $('#'+form).submit()
         }
     </script>
-    {% include 'MottaPgBundle:Paginator:components/js.html.twig' %}
+    {% include '@MottaPg/Paginator/components/js.html.twig' %}
 {% endblock %}

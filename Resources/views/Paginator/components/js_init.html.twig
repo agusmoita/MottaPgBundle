@@ -16,15 +16,15 @@
     var showPageNav = "{{ paginator.hide.pageNav }}"
     var cleanForm = "{{ paginator.form.clean.vars.id }}"
     var cleanVal = false
-    var hide = "{{ paginator.hide.listado }}"
+    var hide = "{{ paginator.hide.list }}"
 
     $("#"+form+" #"+cleanForm).val(false)
 
     function validatePageButtons() {
         if (totalPages <= 1 && !showPageNav) {
-            $('#'+form+" .page-nav").addClass('hide')
+            $('#'+form+" .page-nav").addClass('invisible')
         } else {
-            $('#'+form+" .page-nav").removeClass('hide')
+            $('#'+form+" .page-nav").removeClass('invisible')
         }
         $('#prevPage-'+form).attr('disabled',
               (+$("#"+form+" #"+pageForm).val() <= 1))

@@ -1,4 +1,4 @@
-{% extends 'MottaPgBundle:Paginator:layouts/paginator_ajax.html.twig' %}
+{% extends '@MottaPg/Paginator/layouts/paginator_ajax.html.twig' %}
 
 {% block list %}
     {% set hasMassAction = paginator.massActions|length > 0 ? true : false %}
@@ -40,6 +40,6 @@
                 {% endblock %}
             </tbody>
         </table>
-        <i class="fa fa-spinner fa-spin table-loader hide" id="loader-{{ paginator.id }}"></i>
+        <i class="fa fa-spinner fa-spin table-loader invisible" id="loader-{{ paginator.id }}"></i>
     </div>
 {% endblock %}

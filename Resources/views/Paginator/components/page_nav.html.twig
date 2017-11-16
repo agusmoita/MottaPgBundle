@@ -1,5 +1,5 @@
-<div class="col-xs-4 small text-center">
-    <div class="page-nav {{ ( paginator.totalPages <= 1 and not paginator.hide.pageNav ) ? 'hide' : '' }}">
+<div class="col-4 small text-center">
+    <div class="page-nav {{ ( paginator.totalPages <= 1 and not paginator.hide.pageNav ) ? 'invisible' : '' }}">
         <button class="btn btn-default btn-navbar btn-sm" id="firstPage-{{ paginator.id }}" type="button" title="{{ 'First page'|trans }}">
             <<
         </button>

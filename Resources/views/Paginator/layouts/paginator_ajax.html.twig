@@ -1,12 +1,12 @@
-{% extends 'MottaPgBundle:Paginator:layouts/paginator_base.html.twig' %}
+{% extends '@MottaPg/Paginator/layouts/paginator_base.html.twig' %}
 
 {% block javascripts %}
     {{ parent() }}
-	{% include 'MottaPgBundle:Paginator:components/js_init.html.twig' %}
+	{% include '@MottaPg/Paginator/components/js_init.html.twig' %}
     <script type="text/javascript">
         var pgroute = ""
         function pgsubmit () {
-            $('#loader-'+form).removeClass('hide')
+            $('#loader-'+form).removeClass('invisible')
             $('#table-'+form+' table').addClass('loading')
             $.ajax({
                 url: "",
@@ -15,9 +15,9 @@
             })
             .done(function(data) {
                 if (data['totalRows'] == 0 && cleanVal && hide) {
-                    $('#table-container-'+form).addClass('hide')
+                    $('#table-container-'+form).addClass('invisible')
                 } else {
-                    $('#table-container-'+form).removeClass('hide')
+                    $('#table-container-'+form).removeClass('invisible')
                 }
                 $('#table-body-'+form).html(data['html'])
                 $('#actualPage-'+form).text($("#"+form+" #"+pageForm).val())
@@ -31,7 +31,7 @@
                 validatePageButtons()
 
                 loaderButton(false)
-                $('#loader-'+form).addClass('hide')
+                $('#loader-'+form).addClass('invisible')
                 $('#table-'+form+' table').removeClass('loading')
                 checkselected()
             })
@@ -40,5 +40,5 @@
             })
         }
 	</script>
-	{% include 'MottaPgBundle:Paginator:components/js.html.twig' %}
+	{% include '@MottaPg/Paginator/components/js.html.twig' %}
 {% endblock %}

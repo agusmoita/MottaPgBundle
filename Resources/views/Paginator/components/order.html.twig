@@ -1,4 +1,4 @@
-<div class="col-xs-12 text-right text-right-not-xs {{ paginator.form.orderBy.vars.choices|length == 0 or paginator.hide.order ? 'hide' : ''}}">
+<div class="col-12 text-right text-right-not-xs {{ paginator.form.orderBy.vars.choices|length == 0 or paginator.hide.order ? 'invisible' : ''}}">
     {{ form_label(paginator.form.orderBy, null) }}
     {{ form_widget(paginator.form.orderBy, { 'attr': {'class': 'btn btn-default btn-navbar btn-sm'} }) }}
     {{ form_widget(paginator.form.direction, { 'attr': {'class': 'btn btn-default btn-navbar btn-sm'} }) }}
