@@ -1,16 +1,16 @@
-<div class="panel-group" id="accordion-{{ paginator.id }}" role="tablist" aria-multiselectable="true">
-    <div class="panel panel-default">
-        <div class="panel-heading" role="tab" id="headingOne-{{ paginator.id }}">
+<div id="accordion-{{ paginator.id }}" role="tablist">
+    <div class="card">
+        <div class="card-header" role="tab" id="headingOne-{{ paginator.id }}">
             <a id="panel-filter-{{ paginator.id }}" data-toggle="collapse" data-parent="#accordion-{{ paginator.id }}" href="#collapseOne-{{ paginator.id }}" aria-expanded="true" aria-controls="collapseOne-{{ paginator.id }}">
-                <h4 class="text-left panel-title">
+                <h4 class="text-left panel-title mb-0">
                     <span class="fa fa-search" aria-hidden="true"></span>
                     {{ 'Search filters'|trans }}
                     <span id="arrow-{{ paginator.id }}" class="arrow fa fa-chevron-{{ paginator.panelState == 'open' ? 'up' : 'down' }}"></span>
                 </h4>
             </a>
         </div>
-        <div id="collapseOne-{{ paginator.id }}" class="panel-collapse collapse {{ paginator.panelState == 'open' ? 'in' : '' }}" role="tabpanel" aria-labelledby="headingOne">
-            <div class="panel-body" id="filters-{{ paginator.id }}">
+        <div id="collapseOne-{{ paginator.id }}" class="collapse {{ paginator.panelState == 'open' ? 'show' : '' }}" role="tabpanel" aria-labelledby="headingOne-{{ paginator.id }}">
+            <div class="card-body" id="filters-{{ paginator.id }}">
                 {% block filters %}
                 	{% include '@MottaPg/Paginator/components/filter_panel_filters.html.twig' %}
                 {% endblock %}
