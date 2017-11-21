@@ -34,6 +34,8 @@
     
 - Repository
     ```php
+    // PersonRepository.php
+    
     public function buildQuery($query, $pg)
     {
         // return SELECT a FROM AppBundle:Person a
@@ -43,6 +45,8 @@
 
 - View
     ```twig
+    {# person/index.html.twig #}
+    
     {% extends '@MottaPgBundle:Paginator:table.html.twig' %}
     
     {% block title %}
