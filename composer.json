@@ -3,7 +3,7 @@
 	"description": "A paginator bundle for Symfony 3",
 	"homepage": "https://github.com/agusmoita/MottaPgBundle",
 	"type": "symfony-bundle",
-	"version": "2.0.2",
+	"version": "2.1.0",
 	"authors": [
 		{
 			"name": "Augusto Moita",
