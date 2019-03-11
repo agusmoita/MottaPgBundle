@@ -8,7 +8,9 @@
 {% endblock %}
 
 {% block body %}
-    {% include '@MottaPg/Paginator/components/mass_error.html.twig' %}
+	{% if paginator.massActions|length > 0 %}
+    	{% include '@MottaPg/Paginator/components/mass_error.html.twig' %}
+	{% endif %}
 	{% block pg_title %}{% endblock %}
 	<div id="list">
 	    <form action="" method="POST" id="{{ paginator.id }}">
