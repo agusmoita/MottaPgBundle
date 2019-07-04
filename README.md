@@ -5,30 +5,20 @@
     ```console
     $ composer require agusmoita/mottapg-bundle
     ```
-    and add to AppKernel.php
-    
-    ```php
-    public function registerBundles()
-    {
-        $bundles = [
-            ...
-            new MottaPgBundle\MottaPgBundle(),
-        ];
-    }
-    ```
 
 #### Usage
 - Controller
     ```php
+    use MottaPgBundle\Util\Paginator\Paginator;
+    
     /**
-     * @Route("/", name="person_index")
-     * @Method("GET|POST")
+     * @Route("/", name="person_index", methods={"GET|POST"})
      */
-    public function indexAction(Request $request)
+    public function indexAction(Paginator $pg, PersonRepository $repo)
     {
-        return $this->get('motta.pg')
+        return $pg
                 ->setView('person/index.html.twig')
-                ->paginate('AppBundle:Person');
+                ->paginate($repo);
     }
     ```
     
@@ -47,7 +37,7 @@
     ```twig
     {# person/index.html.twig #}
     
-    {% extends '@MottaPgBundle:Paginator:table.html.twig' %}
+    {% extends '@MottaPg/Paginator/table.html.twig' %}
     
     {% block title %}
         <h1>List of People</h1>
