@@ -13,7 +13,8 @@ class DqlQueryHelper extends QueryHelper
      */
 	public function setRepository($repoName, $em)
 	{
-		$this->repo = $this->doctrine->getRepository($repoName, $em);
+		//$this->repo = $this->doctrine->getRepository($repoName, $em);
+		$this->repo = $repoName;
 	}
 
     /**
