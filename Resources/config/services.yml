@@ -41,7 +41,6 @@ services:
         arguments: ["@?white_october.tcpdf"]
         public: true
 
-    motta.pg:
-        class: MottaPgBundle\Util\Paginator\Paginator
+    MottaPgBundle\Util\Paginator\Paginator:
         public: true
         arguments: ["@service_container", "@motta.form_remember", "@motta.dql_query_helper", "@motta.sql_query_helper"]
