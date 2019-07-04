@@ -7,6 +7,7 @@ use Symfony\Component\Config\FileLocator;
 use Symfony\Component\HttpKernel\DependencyInjection\Extension;
 use Symfony\Component\DependencyInjection\Loader;
 use Symfony\Component\Config\Definition\Processor;
+use MottaPgBundle\Util\Paginator\Paginator;
 
 /**
  * This is the class that loads and manages your bundle configuration
@@ -27,7 +28,7 @@ class MottaPgExtension extends Extension
         $loader = new Loader\YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
 
-        $paginadorServiceDefinition = $container->getDefinition('motta.pg');
+        $paginadorServiceDefinition = $container->getDefinition(Paginator::class);
         $paginadorServiceDefinition->addMethodCall('setConfig', array(
             $config['paginator']['filters_theme'],
             $config['paginator']['base_layout'],
