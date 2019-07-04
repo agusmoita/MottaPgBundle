@@ -11,13 +11,13 @@
                 <ul class="dropdown-menu" aria-labelledby="dropdownMassActions">
                     {% for action in paginator.massActions %}
                         <li>
-                            <a href="#" id="{{ action.id }}" modal="{{ action.confirmationModal }}" class="action">{{ action.title }}</a>
+                            <a href="#" id="{{ action.id }}" min="{{ action.min }}" max="{{ action.max }}" modal="{{ action.confirmationModal }}" class="action">{{ action.title }}</a>
                         </li>
                     {% endfor %}
                 </ul>
             {% else %}
             	{% for action in paginator.massActions %}
-                    <a href="#" id="{{ action.id }}" modal="{{ action.confirmationModal }}" class="btn btn-primary action">{{ action.title }}</a>
+                    <a href="#" id="{{ action.id }}" min="{{ action.min }}" max="{{ action.max }}" modal="{{ action.confirmationModal }}" class="btn btn-primary action">{{ action.title }}</a>
                 {% endfor %}
         	{% endif %}
             <span id="selected">

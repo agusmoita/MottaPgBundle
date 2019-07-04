@@ -123,10 +123,30 @@
 
         $(document).on('click', '.dropdown .action', function (e) {
             e.preventDefault()
-            if ($('#'+form+' #selected-count').text() == '0') {
-                $('#'+form+' #mass-count-error').removeClass('invisible')
+
+            var selectedCount = $('#'+form+' #selected-count').text();
+            var min = $(this).attr('min');
+            var max = $(this).attr('max');
+            var doAction = true;
+            var errorMessage = '';
+
+            if (min == max && (selectedCount < min || max < selectedCount)) {
+                doAction = false;
+                errorMessage = 'Debe seleccionar '+min+' items.';
+            }
+            else if (selectedCount < min) {
+                doAction = false;
+                errorMessage = 'Debe seleccionar al menos '+min+' items.';
+            } else if (max != 'INF' && max < selectedCount) {
+                doAction = false;
+                errorMessage = 'Debe seleccionar a lo sumo '+max+' items.';
+            }
+            
+            if (!doAction) {
+                $('#mass-error-message').text(errorMessage)
+                $('#mass-count-error').removeClass('invisible')
                 setTimeout(function () {
-                    $('#'+form+' #mass-count-error').addClass('invisible')
+                    $('#mass-count-error').addClass('invisible')
                 }, 2500)
             } else {
                 var modal = $(this).attr('modal')

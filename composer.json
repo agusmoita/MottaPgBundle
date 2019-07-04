@@ -1,9 +1,9 @@
 {
 	"name": "agusmoita/mottapg-bundle",
-	"description": "A paginator bundle for Symfony 3",
+	"description": "A paginator bundle for Symfony",
 	"homepage": "https://github.com/agusmoita/MottaPgBundle",
 	"type": "symfony-bundle",
-	"version": "3.0.1",
+	"version": "3.1.0",
 	"authors": [
 		{
 			"name": "Augusto Moita",

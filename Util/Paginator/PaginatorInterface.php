@@ -82,7 +82,7 @@ interface PaginatorInterface
        * @param string $confirmationModal
        * @return PaginadorInterface
        */
-	public function addMassAction($title, $callback, array $parameters = array(), $confirmationModal = '');
+	public function addMassAction($title, $callback, $min = 1, $max = 'INF', array $parameters = array(), $confirmationModal = '');
 
 	/**
        * @param array $choices

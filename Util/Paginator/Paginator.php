@@ -416,12 +416,12 @@ class Paginator implements PaginatorInterface
      * @param string $confirmationModal
      * @return Paginador
      */
-    public function addMassAction($title, $callback, array $parameters = array(), $confirmationModal = '')
+    public function addMassAction($title, $callback, $min = 1, $max = 'INF', array $parameters = array(), $confirmationModal = '')
     {
         $i = count($this->massActions) + 1;
         $massaction = $this->container
                         ->get('motta.massaction')
-                        ->create($i, $title, $callback, $parameters, $confirmationModal);
+                        ->create($i, $title, $callback, $parameters, $confirmationModal, $min, $max);
         $this->massActions[$massaction->id] = $massaction;
         return $this;
     }
