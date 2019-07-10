@@ -37,6 +37,10 @@ class MassAction
 	 */
 	private $httpKernel;
 
+	private $min;
+
+	private $max;
+
 	/**
 	 * @param HttpKernel $httpKernel
 	 * @return MassAction
@@ -56,13 +60,15 @@ class MassAction
 	 * @param string $confirmationModal
 	 * @return MassAction
 	 */
-	public function create($i, $title, $callback, $parameters, $confirmationModal = '')
+	public function create($i, $title, $callback, $parameters, $confirmationModal = '', $min, $max)
 	{
 		$this->id = 'mass-'.$i;
 		$this->title = $title;
 		$this->callback = $callback;
 		$this->parameters = $parameters;
 		$this->confirmationModal = $confirmationModal;
+		$this->min = $min;
+		$this->max = $max;
 
 		return $this;
 	}
