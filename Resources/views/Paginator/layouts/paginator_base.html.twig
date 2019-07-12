@@ -15,14 +15,14 @@
 	<div id="list">
 	    <form action="" method="POST" id="{{ paginator.id }}">
 	    	{% block pg_header %}
-		        {% if paginator.form.filters is defined and paginator.form.filters|length > 0 %}
-		            {% set filters = paginator.form.filters %}
-		            {% block filtersPanel %}
-		            	{% include '@MottaPg/Paginator/components/filter_'~ paginator.filterTheme ~'.html.twig' %}
-		            {% endblock %}
-		        {% endif %}
 		        <div class="row">
-		            <div class="col-md-12 panel-group text-right">
+			        {% if paginator.form.filters is defined and paginator.form.filters|length > 0 %}
+			            {% set filters = paginator.form.filters %}
+			            {% block filtersPanel %}
+			            	{% include '@MottaPg/Paginator/components/filter_'~ paginator.filterTheme ~'.html.twig' %}
+			            {% endblock %}
+			        {% endif %}
+		            <div class="col-3 text-right">
 		                {% block buttons %}{% endblock %}
 		            </div>
 		        </div>
